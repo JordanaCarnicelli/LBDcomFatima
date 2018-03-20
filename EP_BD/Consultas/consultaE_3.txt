@@ -1,0 +1,15 @@
+﻿-- 3. Uso de junção externa (RIGHT ou LEFT). 
+
+-- enunciado: liste o nome e o cpf de todas as pessoas fisicas que
+
+-- são isentas do tipo 1 (isento_1: recurso_humano ou jornalista) 
+
+-- possuindo ou não barracas, liste também o id e a cor da barraca
+
+-- das pessoas que tenham barracas
+
+select pf.nome, pf.cpf, i.id_barraca, b.cor
+from pessoa_fisica as pf
+join isento as i on i.cpf = pf.cpf
+left join barraca as b on i.id_barraca = b.id_barraca
+where pf.cpf not in (select cpf from isento where isento_2 = 1);

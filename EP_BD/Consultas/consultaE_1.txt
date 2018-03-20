@@ -1,0 +1,14 @@
+﻿-- 1. Uso do comando LIKE como forma de busca de informação em campos do tipo texto.
+
+-- enunciado: liste o id, o tipo, o titulo, data, hora do inicio, cpf e nome do palestrante
+
+-- de todas as atividades não virtuais que tenham 'tecnologia' como assunto.
+
+select a.id_atividade, a.tipo_atividade, p.titulo_palestra,
+a.data, a.hora_inicio, nv.REA_cpf as cpf_palestrante, 
+pf.nome as nome_palestrante
+from atividade as a
+join n_virtual as nv on a.id_atividade = nv.id_atividade
+inner join palestrante as p on p.cpf = nv.REA_cpf
+inner join pessoa_fisica as pf on pf.cpf = p.cpf
+where assunto_palestra like '%tecnologia%';

@@ -1,0 +1,13 @@
+﻿-- 4. Uso da cláusula HAVING.
+
+-- enunciado: liste a razão social e a quantidade de produtos diferentes (categoricamente, ou seja, por tipo, não por estoque)
+
+-- postos a venda de todas as empresas de varejo que vendem necessariamente mais que 2 produtos em suas lojas.
+
+select pj.razao_social, count(*) as qtde_produtos
+from pessoa_juridica as pj
+inner join empresa_varejo as ev on ev.cnpj = pj.cnpj
+inner join loja as l on l.id_loja = ev.id_loja
+inner join vende as v on v.id_loja = ev.id_loja
+group by v.id_loja
+having count(*) > 2;

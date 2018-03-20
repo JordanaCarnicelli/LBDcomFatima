@@ -1,0 +1,15 @@
+﻿-- 5. Usando QUATRO RELAÇÕES diferentes do modelo do banco de dados.
+
+-- enunciado: liste o o id, localização, rua, numero, bairro, cidade e cep
+
+-- de todos os espaços físicos junto dos respectivos gerentes que gerenciam
+
+-- os setores associados a esses espaços físicos.
+
+select distinct pf.nome as nome_gerente, ef.id_espaco_fisico, ef.localizacao, 
+ef.end_rua, ef.end_num, ef.end_bairro, ef.end_cidade, ef.end_cep
+from pessoa_fisica as pf
+join funcionario as f on pf.cpf = f.cpf
+join gerente_setorial as g on g.cpf = f.cpf
+join setor as s on s.cod_setor = g.cod_setor
+join espaco_fisico as ef on ef.cod_setor = s.cod_setor;

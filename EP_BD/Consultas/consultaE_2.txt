@@ -1,0 +1,12 @@
+﻿
+-- 2. Uso de comandos de pertinência a conjuntos (IN ou ALL). 
+
+-- enunciado: liste o nome do participante, a cor e a marca de sua barraca, desde que
+
+-- o participante tenha como ocupação 'estudante' e esteja inscrito com barraca.
+
+select pf.nome, b.cor as cor_barraca, b.marca as marca_barraca
+from pessoa_fisica as pf, participante as p, com_barraca as cb, barraca as b
+where p.cpf = cb.cpf and pf.cpf = p.cpf and
+b.id_barraca = cb.id_barraca and 
+p.cpf in (select cpf from participante where ocupacao like '%estudante%');

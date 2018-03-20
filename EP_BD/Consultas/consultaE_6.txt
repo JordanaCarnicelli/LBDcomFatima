@@ -1,0 +1,17 @@
+﻿-- 6. Usando ao menos UMA RELAÇÃO com DOIS PAPÉIS diferentes
+
+-- enunciado: liste o nome e o endereco de todos os funcionarios
+
+-- de suporte e administração geral que trabalhem no setor 5
+
+(select pf.nome, pf.end_rua, pf.end_num, pf.end_bairro, pf.end_cidade, pf.end_cep, f.suporte as eh_suporte, f.administrador_geral as eh_admin
+from pessoa_fisica as pf
+join funcionario as f on f.cpf = pf.cpf
+join suporte as s on s.cpf = f.cpf
+where f.cod_setor = 5)
+union
+(select pf.nome, pf.end_rua, pf.end_num, pf.end_bairro, pf.end_cidade, pf.end_cep, f.suporte, f.administrador_geral
+from pessoa_fisica as pf
+join funcionario as f on f.cpf = pf.cpf
+join administrador_geral as admin on admin.cpf = f.cpf
+where f.cod_setor = 5)
