@@ -1,0 +1,11 @@
+Próximos passos LBD:
+
+1. Subir Painelista, Expositor e Palestrante para que se relacionem com ATIVIDADE e descer Jornalista (posso criar o relacionamento "cobre")
+2. Tornar ônibus entidade fraca
+3. Incluir atributos de PRODUTO em Expositor (ou talvez não)
+
+Após validação:
+Gerar MR
+Gerar DDL
+Popular
+Gerar consultas (1, 2 e 3 de BD podem ser reeutilizadas, com as devidas adaptações)

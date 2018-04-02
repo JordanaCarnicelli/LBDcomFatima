@@ -1,0 +1,41 @@
+1. Criando um usuário de banco de dados (Creating a Database User)
+
+Você deve criar pelo menos um usuário de banco de dados que você usará para criar objetos de banco de dados. Um usuário do banco de dados é um tipo de objeto de banco de dados: um usuário está associado a um esquema de banco de dados, você se conecta ao banco de dados como usuário do banco de dados e o usuário do banco de dados é o proprietário de quaisquer objetos do banco de dados (tabelas, etc) que você cria no esquema associado ao usuário.
+
+Passos:
+1. Run SQL Command Line.
+2. Conecte-se como usuário "system"
+  2.1. Execute os comandos:
+    connect
+    system
+    <senha-de-system>
+3. Crie o usuário:
+  create user <nome-de-usuario> identified by <senha-de-usuario>;
+4. Dê permissões ao usuário:
+  grant CREATE SESSION, ALTER SESSION, CREATE DATABASE LINK, -
+  CREATE MATERIALIZED VIEW, CREATE PROCEDURE, CREATE PUBLIC SYNONYM, -
+  CREATE ROLE, CREATE SEQUENCE, CREATE SYNONYM, CREATE TABLE, - 
+  CREATE TRIGGER, CREATE TYPE, CREATE VIEW, UNLIMITED TABLESPACE -
+  to <nome-de-usuario>; 
+
+2. Instalando o SQL Developer (Installing SQL Developer)
+
+Agora você deseja poder criar e trabalhar com objetos de banco de dados (tabelas, exibições, procedimentos, funções e assim por diante) no banco de dados que você instalou. Para fazer isso, você pode usar o Oracle SQL Developer e o Oracle Application Express (também chamado de Application Express):
+
+    1 - O SQL Developer é uma ferramenta gráfica que permite navegar, criar, editar e excluir objetos de banco de dados; executar instruções e 		scripts SQL; editar e depurar código PL / SQL; descarregar (exportar) e carregar (importar) dados; migrar bancos de dados de terceiros 		para o Oracle; e visualizar metadados e dados. As instruções neste guia usam o SQL Developer para iniciar o desenvolvimento do banco de 	dados.
+
+    	O SQL Developer não é empacotado com o Oracle Database Express Edition, mas é fácil baixar e instalar o SQL Developer. Grande parte da documentação do Express Edition assume que você instalou o SQL Developer.
+
+    2 - O Application Express é uma ferramenta rápida de desenvolvimento de aplicativos da Web para desenvolvimento e implantação de aplicativos 	 profissionais. O Application Express possui recursos de criação de objetos mais limitados do que o SQL Developer, mas o Application 		Express permite que você crie aplicativos baseados em formulário rapidamente. Este guia inclui seções que explicam como criar um 			aplicativo desse tipo.
+
+    	O Application Express é empacotado com o Oracle Database Express Edition, portanto, nenhum download ou instalação separada é necessária.
+
+Link: http://www.oracle.com/technetwork/developer-tools/sql-developer/
+
+3. Começando a usar o SQL Developer (Getting Started Using SQL Developer)
+
+	3.1. Criando conexões com o banco de dados (Creating Database Connections)
+
+	Para trabalhar com o banco de dados do Express Edition no SQL Developer, você deve criar algumas conexões com o banco de dados, para poder visualizar e trabalhar com objetos de banco de dados, usar a SQL Worksheet e usar outros recursos.
+
+	Seguir as orientações do item 4.1 do link: https://docs.oracle.com/cd/E17781_01/admin.112/e18585/toc.htm#XEGSG114
