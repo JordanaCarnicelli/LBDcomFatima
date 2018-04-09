@@ -5,7 +5,7 @@ CREATE TABLE caravana (
   id_caravana INT NOT NULL,
   nome VARCHAR(45) NOT NULL,
   cidade_origem VARCHAR(100) NOT NULL,
-  PRIMARY KEY (id_caravana))
+  PRIMARY KEY (id_caravana));
 
 
 -- -----------------------------------------------------
@@ -20,7 +20,7 @@ CREATE TABLE endereco (
   numero VARCHAR(45) NOT NULL,
   complemento VARCHAR(100) NULL,
   cep VARCHAR(8) NOT NULL,
-  PRIMARY KEY (id_endereco))
+  PRIMARY KEY (id_endereco));
 
 -- -----------------------------------------------------
 -- Table participante
@@ -48,10 +48,6 @@ CREATE TABLE participante (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_participante_caravana_idx ON participante (id_caravana ASC);
-
-CREATE INDEX fk_endereco_idx ON participante (id_endereco ASC);
-
 -- -----------------------------------------------------
 -- Table barraca
 -- -----------------------------------------------------
@@ -66,8 +62,6 @@ CREATE TABLE barraca (
     REFERENCES participante (cpf)
     ON DELETE SET NULL
     ON UPDATE CASCADE)
-
-CREATE UNIQUE INDEX cpf_UNIQUE ON barraca (cpf ASC);
 
 -- -----------------------------------------------------
 -- Table participante_isento
@@ -110,8 +104,6 @@ CREATE TABLE onibus (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_onibus_caravana_idx ON onibus (id_caravana ASC);
-
 -- -----------------------------------------------------
 -- Table expositor
 -- -----------------------------------------------------
@@ -143,8 +135,6 @@ CREATE TABLE produto (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_expositor_produto_idx ON produto (cpf ASC);
-
 -- -----------------------------------------------------
 -- Table jornalista
 -- -----------------------------------------------------
@@ -158,8 +148,6 @@ CREATE TABLE jornalista (
     REFERENCES participante_isento (cpf)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-
-CREATE UNIQUE INDEX credencial_UNIQUE ON jornalista (credencial ASC);
 
 -- -----------------------------------------------------
 -- Table materia
@@ -176,8 +164,6 @@ CREATE TABLE materia (
     REFERENCES jornalista (cpf)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-
-CREATE INDEX fk_jornalista_materia_idx ON materia (cpf ASC);
 
 -- -----------------------------------------------------
 -- Table categoria_veiculo
@@ -201,8 +187,6 @@ CREATE TABLE veiculo_comunicacao (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_categoria_veiculo_idx ON veiculo_comunicacao (id_categoria_veiculo ASC);
-
 -- -----------------------------------------------------
 -- Table jornalista_veiculo
 -- -----------------------------------------------------
@@ -221,8 +205,6 @@ CREATE TABLE jornalista_veiculo (
     REFERENCES jornalista (cpf)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-
-CREATE INDEX fk_jornalista_veiculo_idx ON jornalista_veiculo (cpf ASC);
 
 -- -----------------------------------------------------
 -- Table painelista
@@ -260,8 +242,6 @@ CREATE TABLE atividade (
     ON DELETE SET NULL
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_tema_idx ON atividade (id_tema ASC);
-
 -- -----------------------------------------------------
 -- Table participacao
 -- -----------------------------------------------------
@@ -280,8 +260,6 @@ CREATE TABLE participacao (
     REFERENCES atividade (id_atividade)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-
-CREATE INDEX fk_atividade_participante_idx ON participacao (id_atividade ASC);
 
 -- -----------------------------------------------------
 -- Table painel
@@ -316,10 +294,6 @@ CREATE TABLE painelista_painel (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 
-CREATE INDEX fk_apresentador_atividade_idx ON painelista_painel (cpf ASC);
-
-CREATE INDEX fk_painel_painelista_idx ON painelista_painel (id_atividade ASC);
-
 -- -----------------------------------------------------
 -- Table palestrante
 -- -----------------------------------------------------
@@ -352,5 +326,3 @@ CREATE TABLE palestra (
     REFERENCES palestrante (cpf)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
-
-CREATE INDEX fk_palestrante_palestra_idx ON palestra (cpf ASC);
