@@ -289,7 +289,7 @@ create table PALESTRANTE (
 
 INSERT INTO PALESTRANTE VALUES
 (11111111111, "Como se tornar um ninja em banco de dados com Fátima Nunes.", "Informática"),
-(22222222222, "Belas Maldições: as precisas profecias de Jordana Carnicelli (bruxa).", "Esoterismo"),
+(22222222222, "Belas Maldições: as preciosas profecias de Jordana Carnicelli (bruxa).", "Esoterismo"),
 (33333333333, "Cavaleiros dos Horóscopos: fazendo seu próprio mapa astral com Shun de Andrômeda.", "Astrologia"),
 (40404040400, "Caso ou compro um playstation 4?" "Auto-ajuda"),
 (40404040401, "Subindo escadas enquanto masca chiclete: desenvolvendo habilidades motoras.", "Corpo e Mente");
