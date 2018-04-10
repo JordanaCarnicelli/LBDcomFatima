@@ -114,7 +114,7 @@ create table EXPOSITOR (
      constraint ID_EXPOS_ISENT_ID primary key (cpf));
 
 INSERT INTO EXPOSITOR (cpf, nome_exposicao, tema_exposicao) VALUES ('11111111111', 'Loja oficial do evento', 'souvenir');
-INSERT INTO EXPOSITOR (cpf, nome_exposicao, tema_exposicao) VALUES ('99999999999', 'Renner', 'Juiz de Fora', 'vestuario');
+INSERT INTO EXPOSITOR (cpf, nome_exposicao, tema_exposicao) VALUES ('99999999999', 'Renner', 'vestuario');
 INSERT INTO EXPOSITOR (cpf, nome_exposicao, tema_exposicao) VALUES ('44444444444', 'Colecionaveis show de bola', 'colecionaveis');
 
 
@@ -209,11 +209,11 @@ INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupaca
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('33333333333', 'Lucas Loiro', TO_DATE('23/06/1999', 'dd/mm/yyyy'), 'lucas@email.com', '15922323232', 'M', 'Youtuber', 'isento com barraca', 300, 0, 1, 3, 2);
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('44444444444', 'Pedro Pedroso', TO_DATE('17/07/1974', 'dd/mm/yyyy'), 'pedro@email.com', '11999988899', 'M', 'Comerciante', 'isento sem barraca', 0, 0, 1, 4, null);
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('55555555555', 'Bruna Bala', TO_DATE('28/02/1988', 'dd/mm/yyyy'), 'bruna@email.com', '12349999977', 'F', 'Professor', 'isento sem barraca', 0, 0, 1, 5, 1);
-INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('66666666666', 'Vitória Valente', TO_DATE('04/04/1986', 'dd/mm/yyyy'), 'vitoria@email.com', '11999995534', 'F', 'Pesquisador', 'isento com barraca', 150, 0, 1, 6, 2);
-INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('77777777777', 'Trevor Tirano', TO_DATE('19/07/1972', 'dd/mm/yyyy'), 'trevor@email.com', '119349993242', 'M', 'Administrador de sistema', 'isento sem barraca', 0, 0, 1, 7, null);
-INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('88888888888', 'Diana Durona', TO_DATE('17/011/1988', 'dd/mm/yyyy'), 'diana@email.com', '14954782342', 'F', 'Professor', 'isento sem barraca', 0, 0, 1, 8, 1);
-INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('99999999999', 'Pablo Ruanda Marcos Rossi', TO_DATE('20/02/1990', 'dd/mm/yyyy'), 'pablo@email.com', '19988888888', 'M', 'Comerciante', 'isento sem barraca', 0, 0, 1, 9, 1);
-INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('21111111111', 'Gabriel Garcia', TO_DATE('12/12/2000', 'dd/mm/yyyy'), 'gabriel@email.com', '11977766545', 'M', 'Funcionario Publico', 'pagante com barraca', 300, 0, 1, 10, 2);
+INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('66666666666', 'Vitória Valente', TO_DATE('04/04/1986', 'dd/mm/yyyy'), 'vitoria@email.com', '11999995534', 'F', 'Pesquisador', 'isento com barraca', 150, 0, 1, 6, 5);
+INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('77777777777', 'Trevor Tirano', TO_DATE('19/07/1972', 'dd/mm/yyyy'), 'trevor@email.com', '119349993242', 'M', 'Administrador de sistema', 'isento sem barraca', 0, 0, 1, 7, 6);
+INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('88888888888', 'Diana Durona', TO_DATE('17/011/1988', 'dd/mm/yyyy'), 'diana@email.com', '14954782342', 'F', 'Professor', 'isento sem barraca', 0, 0, 1, 8, 3);
+INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('99999999999', 'Pablo Ruanda Marcos Rossi', TO_DATE('20/02/1990', 'dd/mm/yyyy'), 'pablo@email.com', '19988888888', 'M', 'Comerciante', 'isento sem barraca', 0, 0, 1, 9, 3);
+INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('21111111111', 'Gabriel Garcia', TO_DATE('12/12/2000', 'dd/mm/yyyy'), 'gabriel@email.com', '11977766545', 'M', 'Funcionario Publico', 'pagante com barraca', 300, 0, 1, 10, 4);
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('23333333333', 'Fernanda Falamansa', TO_DATE('09/08/1979', 'dd/mm/yyyy'), 'fernanda@email.com', '1177779999', 'F', 'Desenvolvedor', 'pagante sem barraca', 0, 0, 1, 11, null);
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('24444444444', 'Igor Irado', TO_DATE('30/04/1977', 'dd/mm/yyyy'), 'igor@email.com', '11996659990', 'M', 'Empresario', 'pagante sem barraca', 0, 0, 1, 11, null);
 INSERT INTO PARTICIPANTE (cpf, nome, data_nasc, email, telefone, genero, ocupacao, categoria_ins, valor_barraca, PAGANTE, ISENTO, id_endereco, id_caravana) VALUES ('25555555555', 'Julio Iradado Falamansa', TO_DATE('24/07/2007', 'dd/mm/yyyy'), 'julio@email.com', '11900925991', 'M', 'Estudante', 'pagante sem barraca', 0, 0, 1, 11, null);
@@ -230,7 +230,13 @@ create table PRODUTO (
      cpf varchar(11) not null,
      constraint ID_PRODUTO_ID primary key (id_produto));
 
-INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (1, 'Caneca do evento', 'caneca', 'Preta com o logo', 1000, 50.00, 11111111111);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (1, 'Caneca do evento', 'caneca', 'Preta com o logo', 1000, 50.00, ‘11111111111’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (2, Camiseta do evento', 'vestuario', Azul com o logo', 1000, 70.00, ‘11111111111’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (3, Agenda do evento', 'papelaria', 'Azul com o logo brochura', 1000, 80.00, ‘11111111111’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (4, 'Moletom Mulher Maravilha', 'vestuario', 'Vermelha com estampa, capuz', 500, 200.00, ‘44444444444’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (5, 'Par de meias Batman', 'vestuario', 'Preta com o bat-sinal', 200, 50.00, ‘44444444444’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (6, 'Replica Dr. Estranho’, 'colecionavel', 'Replica de aço escala 1/6', 100, 500.00, ‘99999999999’);
+INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (7, 'Chaveiro Ada Lovelace', 'colecionavel', 'Branco com estampa feito de pano', 1000, 50.00, ‘99999999999’);
 
 
 create table APRESENTA_PN (
@@ -239,17 +245,33 @@ create table APRESENTA_PN (
      constraint ID_APRESENTA_PN_ID primary key (id_painel, cpf));
 
 INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('55555555555', 1);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('55555555555', 3);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('55555555555', 5);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('66666666666', 2);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('66666666666', 4);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('66666666666', 5);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('77777777777', 1);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('77777777777', 2);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('77777777777', 3);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('77777777777', 4);
+INSERT INTO APRESENTA_PN (cpf, id_painel) VALUES ('77777777777', 5);
 
 
 create table ONIBUS_1 (
      id_onibus numeric not null,
      id_caravana numeric not null,
-     modelo varchar(20) not null,
+     modelo varchar(50) not null,
      capacidade numeric not null,
      constraint ID_ONIBUS_1_ID primary key (id_onibus),
      constraint SID_ONIBUS_1_ID unique (id_caravana, id_onibus));
 
-INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (1, 1, 'Cometa azul', 40);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (1, 3, 'Onibus Turismo', 40);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (2, 2, 'Van', 15);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (3, 1, 'Onibus Turismo', 40);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (4, 5, 'Onibus Turismo', 40);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (5, 4, 'Van', 10);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (6, 6, 'Van', 12);
+INSERT INTO ONIBUS_1 (id_onibus, id_caravana, modelo, capacidade) VALUES (7, 3, 'Van', 15);
 
 create table TRABALHA_EM (
      cpf varchar(11) not null,
@@ -257,14 +279,19 @@ create table TRABALHA_EM (
      constraint ID_TRABALHA_EM_ID primary key (codigo_vc, cpf));
 
 INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('33333333333', 1);
+INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('33333333333', 2);
+INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('22222222222', 3);
+
 
 create table VEICULO_COMUNICACAO (
      codigo_vc numeric not null,
      nome_vc varchar(100) not null,
-     meio_comunicacao varchar(30) not null,
+     meio_comunicacao varchar(50) not null,
      constraint ID_VEICULO_COMUNICACAO_ID primary key (codigo_vc));
 
 INSERT INTO VEICULO_COMUNICACAO (codigo_vc, nome_vc, meio_comunicacao) VALUES (1, 'Canal Tech', 'youtube');
+INSERT INTO VEICULO_COMUNICACAO (codigo_vc, nome_vc, meio_comunicacao) VALUES (2, 'G1', 'portal de noticias');
+INSERT INTO VEICULO_COMUNICACAO (codigo_vc, nome_vc, meio_comunicacao) VALUES (3, 'Galileu', 'revista');
 
 
 -- Constraints Section
