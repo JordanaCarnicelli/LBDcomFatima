@@ -1,4 +1,4 @@
--- 2. Uso de comandos de pertinência a conjuntos (IN ou ALL). 
+﻿-- 1. Uso de comandos de pertinência a conjuntos (IN ou ALL). 
 -- Enunciado: liste o nome do participante, modelo e marca e valor pago em sua barraca, e, por fim, o valor pago na inscrição desde que
 -- o participante tenha como ocupação 'funcionario publico' e tenha se inscrito com a categoria pagante com barraca.
 
@@ -21,7 +21,7 @@ where participante.cpf = barraca.cpf and participante.cpf = pagante.cpf and part
 	where ocupacao like '%Funcionario Publico%' and categoria_ins like 'pagante com barraca'
 );
 
--- 7.a Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que
+-- 2 Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que
 -- a somatoria dos produtos seja maior do que R$250,00.
 
 -- Retornos esperados dos seguintes registros:
@@ -47,7 +47,7 @@ and cpf in
 	)
 ;
 
--- 7.b Retorne os nomes das exposições com produtos entre 50 e 150 reais e que não tem produtos mais caros do que 200 reais
+-- 3 Retorne os nomes das exposições com produtos entre 50 e 150 reais e que não tem produtos mais caros do que 200 reais
 
 select expositor.nome_exposicao
 from expositor
@@ -62,3 +62,12 @@ and cpf not in
 	where preco > 199.99
 	)
 ;
+
+-- 4. Uso do comando LIKE como forma de busca de informação em campos do tipo texto.
+-- Enunciado: o nome do palestrante, o tema, a data e a hora de inicio
+-- de todas as palestras que tenham 'banco de dados' como parte do tema.
+
+select participante.nome , palestra.tema_palestra, palestra.data_palestra, palestra.hora_inicio
+from participante
+inner join palestra on participante.cpf = palestra.cpf
+where palestra.tema_palestra like '%banco de dados%';
