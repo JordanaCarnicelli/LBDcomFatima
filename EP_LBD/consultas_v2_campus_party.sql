@@ -1,13 +1,3 @@
--- 1. Uso do comando LIKE como forma de busca de informação em campos do tipo texto.
--- Enunciado: liste o id, o tipo, o titulo, data, hora do inicio, cpf e nome do palestrante
--- de todas as atividades que tenham 'tecnologia' como parte do tema.
-
-select a.id_atividade, a.tipo_atividade, p.titulo_palestra, a.data_atividade, a.hora_inicio
-from atividade as a
-inner join palestrante as p on p.cpf = a.cpf_palestrante
-where tema_palestra like '%tecnologia%';
-
-
 -- 2. Uso de comandos de pertinência a conjuntos (IN ou ALL). 
 -- Enunciado: liste o nome do participante, modelo e marca e valor pago em sua barraca, e, por fim, o valor pago na inscrição desde que
 -- o participante tenha como ocupação 'funcionario publico' e tenha se inscrito com a categoria pagante com barraca.
@@ -30,27 +20,6 @@ where participante.cpf = barraca.cpf and participante.cpf = pagante.cpf and part
 	from participante
 	where ocupacao like '%Funcionario Publico%' and categoria_ins like 'pagante com barraca'
 );
-
-
--- 3. Qual o custo médio pago pelos participantes em suas inscrições?
--- Faça uma consulta utilizando como
--- critério os que alugaram barraca e os que não e encontre os valores mínimo e máximo para cada grupo.
-
--- Custo médio das inscrições geral
-select avg(valor_insc), min(valor_insc), max(valor_insc)
-from pagante;
-
--- Custo médio do aluguel das barracas
-select avg(valor_barraca), min(valor_barraca), max(valor_barraca)
-from participante;
-
-
--- 4. Retorne o nome, a cidade de origem e a quantidade de pessoas transportadas da caravana que apresenta a
---    maior quantidade de ônibus utilizados para o evento.
-
--- 5. Qual a cidade de origem da maior parte dos participantes do evento? E se considerarmos apenas os isentos?
-
--- 6. Recupere os nomes de todos os palestrantes e painelistas cujas atividades ocorrerão no dia 11/01/2018.
 
 -- 7.a Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que
 -- a somatoria dos produtos seja maior do que R$250,00.

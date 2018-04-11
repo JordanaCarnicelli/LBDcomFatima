@@ -313,7 +313,7 @@ INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (2, '22222222222', '
 INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (3, '77777777777', 'Modelo 2', 'Marca 1');
 INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (4, '33333333333', 'Modelo 2', 'Marca 2');
 INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (5, '44444444444', 'Modelo 2', 'Marca 2');
-INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (6, '99999999999', 'Modelo 1', 'Marca 1');
+INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (6, '21111111111', 'Modelo 1', 'Marca 1');
 
 INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (1, 'Caneca do evento', 'caneca', 'Preta com o logo', 1000, 50.00, '11111111111');
 INSERT INTO PRODUTO (id_produto, nome, tipo_produto, descricao, quantidade_estoque, preco, cpf) VALUES (2, 'Camiseta do evento', 'vestuario', 'Azul com o logo', 1000, 70.00, '11111111111');
