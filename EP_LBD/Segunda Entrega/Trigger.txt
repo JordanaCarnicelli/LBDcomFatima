@@ -1,0 +1,28 @@
+1. Excluir painel ao excluir painelista
+
+Oracle:
+
+create or replace TRIGGER 
+  REMOVER_PAINEL
+AFTER DELETE
+ON PAINELISTA
+FOR EACH ROW
+
+DECLARE
+BEGIN
+    
+    DELETE FROM PAINEL
+    WHERE id_painel IN (
+        SELECT id_painel, COUNT(*)
+        FROM APRESENTA_PN
+        WHERE id_painel IN (
+            SELECT id_painel FROM APRESENTA_PN
+            WHERE APRESENTA_PN.cpf = :old.cpf
+        )
+        GROUP BY id_painel
+        HAVING COUNT(*) <= 1
+    )
+    
+    DELETE FROM APRESENTA_PN
+    WHERE APRESENTA_PN.cpf = :old.cpf
+END;
