@@ -1,6 +1,10 @@
-1. Visão de expositor e produto para otimizar duas queries da primeira entrega
+2. Essa visão é responsável por armazenar informações do expositor e dos produtos, com o intuito de otimizar duas consultas que foram apresentadas na primeira entrega do trabalho e que utilizam informações dessas duas relações.
+
+Consultas:
 
 Oracle e SQL:
+
+Os campos escolhidos para compor a view são
 
 CREATE VIEW expositor_produto
 (nome_exposicao, cpf, preco)
@@ -10,9 +14,12 @@ FROM EXPOSITOR
 INNER JOIN PRODUTO 
 ON EXPOSITOR.cpf = PRODUTO.cpf
 
-2. Visão para veiculos de comunicação não verem matérias de outros
+1. Essa visão é responsável representar algumas informações do veículo de comunicação, e dos jornalistas associados a eles e as respectivas matérias associadas a esses jornalistas. A ideia de restrição de segurança de acessoa que implica nessa visão é que diferentes veículos de comunicação não tenham acesso ao conteúdo que está sendo produzido por outros veículos, uma vez que este é registrado antes da publicação das resportagens. Assim, garantimos que um veículo não utilize informações sobre o trabalho de outro para ganhar vantagem competitiva.
 
 Oracle e SQL:
+
+Como a ideia principal é o aceso ao conteudo produzido pelos veículos, é os campos escolhidos para essa visão representam o nome e a plataforma do veiculo, as informações que descrevem as matérias e o cpf para que se saiba qual o jornalista responsável por cada matéria.
+A solução apresentada para o SQL padrão também é compativel com o Oracle, que é o SGBD utilizado pelo grupo.
 
 CREATE VIEW MATERIA_VEICULO
 (nome_vc, meio_comunicacao, cpf, titulo, assunto, data)
