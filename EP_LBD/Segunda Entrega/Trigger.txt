@@ -71,7 +71,25 @@ BEGIN ATOMIC
     WHERE APRESENTA_PN.cpf = oldRow.cpf
 END;
 
-2. Adicionar jornalistas como participantes pagantes normais ao remover veiculo, com o valor de pagamento igual a todos os dias
+Casos de teste:
+a.
+b.
+c.
+
+2. O segundo trigger apresentado tem como função alterar o cadastro de um jornalista, quando um veículo de comunicação for removido.
+Quando um veículo é cadastrado, é entendido que ele possui um relacionamento de parceria com o evento. Quando um jornalista é cadastrado, seus ingressos já foram comprados pelo veículo associado. Dessa forma, ao remover um veículo do sistema, todos os dados relacionados a esse devem ser apagados, inclusive os jornalistas e as matérias. Porém, como os ingressos do jornalista já foram comprados, não é interessante descartar todas as informações sobre o proprietário desse ingresso. Para solucionar esse problema, quando o veículo for removido, os dados dos jornalistas associados são apagados e ele é cadastrado como um participante pagante comum.
+
+Evento:
+Remover na relação VEICULO_COMUNICACAO.
+
+Condição: 
+Sempre.
+
+Ação: 
+Inserir na relação PAGANTE todos os jornalistas associados ao veiculo de comunicação removido
+Remover esses mesmos jornalistas da relação ISENTO
+Remover esses mesmos jornalistas da relação JORNALISTA
+Remover os relacionamentos associados ao veiculo de comunicação da relação TRABALHA_EM
 
 Oracle:
 
@@ -103,13 +121,7 @@ BEGIN
         SELECT cpf FROM TRABALHA_EM
         WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
     )
-
-    DELETE FROM MATERIA
-    WHERE MATERIA.cpf IN (
-        SELECT cpf FROM TRABALHA_EM
-        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
-    )
-
+    
     DELETE FROM TRABALHA_EM
     WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
 END;
@@ -155,3 +167,8 @@ BEGIN ATOMIC
     DELETE FROM TRABALHA_EM
     WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
 END;
+
+Casos de teste:
+a.
+b.
+c.
