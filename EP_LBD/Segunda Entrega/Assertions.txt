@@ -1,8 +1,8 @@
-1. Só pode ter um participante associado por barraca
+1. Só pode ter um participante associado por barraca, já havia sido implementada a primeira entrega como ...
 
 SQL:
 
-create assertion restricao_participante_barraca
+create assertion restricao_participante_barraca check
 (not exists (
         SELECT COUNT(*) FROM BARRACA GROUP BY cpf
         HAVING COUNT(*) > 1)
@@ -18,7 +18,7 @@ ALTER TABLE BARRACA
 
 SQL:
 
-create assertion restricao_jornalista_veiculo
+create assertion restricao_jornalista_veiculo check
 (not exists (
         SELECT COUNT(*) FROM TRABALHA_EM GROUP BY codigo_vc
          HAVING COUNT(*) > 2)
@@ -27,21 +27,21 @@ create assertion restricao_jornalista_veiculo
 Oracle:
 
 create or replace TRIGGER 
-  CHECK_JORNALISTA_VEICULO
+CHECK_JORNALISTA_VEICULO
 BEFORE INSERT 
 ON TRABALHA_EM  
 FOR EACH ROW
 
 DECLARE
-    qtdJornalistas NUMBER;
+    qtdJornalistas INT
 BEGIN
     SELECT COUNT(*) INTO qtdJornalistas
     FROM TRABALHA_EM o
-    WHERE o.codigo_vc = :new.codigo_vc;
+    WHERE o.codigo_vc = :new.codigo_vc
 
     IF (qtdJornalistas >= 2)
     THEN
-        RAISE_APPLICATION_ERROR( -20001, 'Numero maximo de jornalistas por veiculo excedido!' );
-    END IF;
+        RAISE_APPLICATION_ERROR( -20001, 'Numero maximo de jornalistas por veiculo excedido!' )
+    END IF
 END;
 

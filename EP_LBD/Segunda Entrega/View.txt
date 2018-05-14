@@ -5,7 +5,7 @@ Oracle e SQL:
 CREATE VIEW expositor_produto
 (nome_exposicao, cpf, preco)
 AS
-SELECT nome_exposicao, cpf, preco
+SELECT EXPOSITOR.nome_exposicao, EXPOSITOR.cpf, PRODUTO.preco
 FROM EXPOSITOR
 INNER JOIN PRODUTO 
 ON EXPOSITOR.cpf = PRODUTO.cpf
