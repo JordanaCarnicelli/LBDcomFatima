@@ -1,6 +1,48 @@
 2. Essa visão é responsável por armazenar informações do expositor e dos produtos, com o intuito de otimizar duas consultas que foram apresentadas na primeira entrega do trabalho e que utilizam informações dessas duas relações.
 
-Consultas:
+Consultas otimizadas:
+
+-- 2 Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que
+-- a somatoria dos produtos seja maior do que R$250,00.
+
+-- Retornos esperados dos seguintes registros:
+-- PRODUTO (4, 'Moletom Mulher Maravilha', 'vestuario', 'Vermelha com estampa, capuz', 500, 200.00, '44444444444')
+-- PRODUTO (6, 'Replica Dr. Estranho', 'colecionavel', 'Replica de aço escala 1/6', 100, 500.00, '99999999999')
+-- PRODUTO (7, 'Chaveiro Ada Lovelace', 'colecionavel', 'Branco com estampa feito de pano', 1000, 50.00, '99999999999')
+-- EXPOSITOR ('99999999999', 'Renner', 'vestuario')
+-- EXPOSITOR ('44444444444', 'Colecionaveis show de bola', 'colecionaveis')
+-- EXPOSITOR ('11111111111', 'Loja oficial do evento', 'souvenir');
+
+select expositor.nome_exposicao
+from expositor
+where cpf in
+	(select cpf
+	from produto
+	where preco > 100.00
+	)
+and cpf in
+	(select cpf
+	from produto
+	group by cpf
+	having sum(preco) > 250.00
+	)
+;
+
+-- 3 Retorne os nomes das exposições com produtos entre 50 e 150 reais e que não tem produtos mais caros do que 200 reais
+
+select expositor.nome_exposicao
+from expositor
+where cpf in
+	(select cpf
+	from produto
+	where preco between 50.00 and 150.00
+	)
+and cpf not in
+	(select cpf
+	from produto
+	where preco > 199.99
+	)
+;
 
 Oracle e SQL:
 
