@@ -71,6 +71,12 @@ BEGIN ATOMIC
     WHERE APRESENTA_PN.cpf = oldRow.cpf
 END;
 
+Previsões:
+
+Para usar o BEFORE no lugar de AFTER, não seria necessário alterar as consultas realizadas, porque elas não são feitas na mesma tabela em que o delete que causou o TRIGGER foi realizado.
+
+Para utilizar o FOR EACH STATEMENT, seria necessário fazer uma consulta para saber todos os registros que foram afetados e usar o resultado obtido para filtrar a consulta de paineis afetados e a remoção dos registro da relação APRESENTA_PN.
+
 Casos de teste:
 a.
 b.
@@ -167,15 +173,15 @@ BEGIN ATOMIC
         WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
     )
 
-    DELETE FROM MATERIA
-    WHERE MATERIA.cpf IN (
-        SELECT cpf FROM TRABALHA_EM
-        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
-    )
-
     DELETE FROM TRABALHA_EM
     WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
 END;
+
+Previsões:
+
+Para usar o BEFORE no lugar de AFTER, não seria necessário alterar as consultas realizadas, porque elas não são feitas na mesma tabela em que o delete que causou o TRIGGER foi realizado.
+
+Para utilizar o FOR EACH STATEMENT, seria necessário fazer uma consulta para saber todos os registros que foram afetados e usar o resultado obtido em cada uma das clausulas DELETE efetuadas e para o INSERT também, para que elas fossem acionadas apenas para os registros que de fato foram afetados pela remoção.
 
 Casos de teste:
 a.
