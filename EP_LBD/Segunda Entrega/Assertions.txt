@@ -39,7 +39,7 @@ BEGIN
     FROM TRABALHA_EM o
     WHERE o.codigo_vc = :new.codigo_vc;
 
-    IF (qtdJornalistas = 2)
+    IF (qtdJornalistas >= 2)
     THEN
         RAISE_APPLICATION_ERROR( -20001, 'Numero maximo de jornalistas por veiculo excedido!' );
     END IF;

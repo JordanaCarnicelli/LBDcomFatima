@@ -3,14 +3,11 @@
 Oracle:
 
 create or replace TRIGGER 
-  REMOVER_PAINEL
+REMOVER_PAINEL
 AFTER DELETE
 ON PAINELISTA
 FOR EACH ROW
-
-DECLARE
 BEGIN
-    
     DELETE FROM PAINEL
     WHERE id_painel IN (
         SELECT id_painel, COUNT(*)
@@ -22,7 +19,117 @@ BEGIN
         GROUP BY id_painel
         HAVING COUNT(*) <= 1
     )
-    
+
     DELETE FROM APRESENTA_PN
     WHERE APRESENTA_PN.cpf = :old.cpf
+END;
+
+SQL:
+
+create TRIGGER 
+REMOVER_PAINEL
+AFTER DELETE
+ON PAINELISTA
+REFERENCING old row as oldRow
+FOR EACH ROW
+BEGIN ATOMIC
+    DELETE FROM PAINEL
+    WHERE id_painel IN (
+        SELECT id_painel, COUNT(*)
+        FROM APRESENTA_PN
+        WHERE id_painel IN (
+            SELECT id_painel FROM APRESENTA_PN
+            WHERE APRESENTA_PN.cpf = oldRow.cpf
+        )
+        GROUP BY id_painel
+        HAVING COUNT(*) <= 1
+    )
+
+    DELETE FROM APRESENTA_PN
+    WHERE APRESENTA_PN.cpf = oldRow.cpf
+END;
+
+2. Adicionar jornalistas como participantes pagantes normais ao remover veiculo, com o valor de pagamento igual a todos os dias
+
+Oracle:
+
+create or replace TRIGGER 
+REMOVER_VEICULO_JORNALISTA
+AFTER DELETE
+ON VEICULO_COMUNICACAO
+FOR EACH ROW
+BEGIN
+    INSERT INTO PAGANTE (cpf, valor_insc)
+    SELECT cpf, 350.00
+    FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+
+    DELETE FROM ISENTO
+    WHERE ISENTO.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    )
+
+    DELETE FROM JORNALISTA
+    WHERE JORNALISTA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    )
+
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    )
+
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    )
+
+    DELETE FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+END;
+
+SQL:
+
+create TRIGGER 
+REMOVER_VEICULO_JORNALISTA
+AFTER DELETE
+ON VEICULO_COMUNICACAO
+REFERENCING old row as oldRow
+FOR EACH ROW
+BEGIN ATOMIC
+    INSERT INTO PAGANTE (cpf, valor_insc)
+    SELECT cpf, 350.00
+    FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+
+    DELETE FROM ISENTO
+    WHERE ISENTO.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+    )
+
+    DELETE FROM JORNALISTA
+    WHERE JORNALISTA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+    )
+
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+    )
+
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN (
+        SELECT cpf FROM TRABALHA_EM
+        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+    )
+
+    DELETE FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
 END;

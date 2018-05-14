@@ -1,0 +1,25 @@
+1. Visão de expositor e produto para otimizar duas queries da primeira entrega
+
+Oracle e SQL:
+
+CREATE VIEW expositor_produto
+(nome_exposicao, cpf, preco)
+AS
+SELECT nome_exposicao, cpf, preco
+FROM EXPOSITOR
+INNER JOIN PRODUTO 
+ON EXPOSITOR.cpf = PRODUTO.cpf
+
+2. Visão para veiculos de comunicação não verem matérias de outros
+
+Oracle e SQL:
+
+CREATE VIEW MATERIA_VEICULO
+(nome_vc, meio_comunicacao, cpf, titulo, assunto, data)
+AS
+SELECT VEICULO_COMUNICACAO.nome_vc, VEICULO_COMUNICACAO.meio_comunicacao, TRABALHA_EM.cpf, MATERIA.titulo, MATERIA.assunto, MATERIA.data
+FROM VEICULO_COMUNICACAO
+INNER JOIN TRABALHA_EM 
+ON VEICULO_COMUNICACAO.codigo_vc = TRABALHA_EM.codigo_vc
+INNER JOIN MATERIA
+ON TRABALHA_EM.cpf = MATERIA.cpf
