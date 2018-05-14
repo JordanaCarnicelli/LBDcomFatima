@@ -46,7 +46,7 @@ END;
 SQL:
 
 A estrutura do TRIGGER apresentado para o SQL padrão é a mesma da apresentada para o Oracle, com excessão à forma de referenciar a linha
-que foi removida, que aqui é feita por: REFERENCING old row as oldRow, e acessada por oldRow.campoDesejado.
+que foi removida, que aqui é feita por: REFERENCING old row as oldRow, e acessada por oldRow.campoDesejado. Também foi utilizado BEGIN ATOMIC visto que são feitas múltiplas operações.
 
 create TRIGGER 
 REMOVER_PAINEL
@@ -93,6 +93,12 @@ Remover os relacionamentos associados ao veiculo de comunicação da relação T
 
 Oracle:
 
+Para inserir em PAGANTE, são utilizados os valores de cpf associados ao veiculo e um valor arbitrario definido aqui como 350.00,
+que representa o valor em reais(R$) de ingresso para todos os dias do evento. 
+As remoções citadas na descrição são todas feitas pela mesma clausula WHERE que relaciona o cpf ao veiculo removido, uma vez que
+esse campo está presente em todas as relações necessárias, com excessão da última que pe feita diretamente pelo codigo_vc do veiculo
+removido.
+
 create or replace TRIGGER 
 REMOVER_VEICULO_JORNALISTA
 AFTER DELETE
@@ -127,6 +133,9 @@ BEGIN
 END;
 
 SQL:
+
+A estrutura do TRIGGER apresentado para o SQL padrão é a mesma da apresentada para o Oracle, com excessão à forma de referenciar a linha
+que foi removida, que aqui é feita por: REFERENCING old row as oldRow, e acessada por oldRow.campoDesejado. Também foi utilizado BEGIN ATOMIC visto que são feitas múltiplas operações.
 
 create TRIGGER 
 REMOVER_VEICULO_JORNALISTA
