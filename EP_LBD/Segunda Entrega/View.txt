@@ -4,7 +4,8 @@ Consultas:
 
 Oracle e SQL:
 
-Os campos escolhidos para compor a view são
+Os campos escolhidos para compor a view são nome_exposicao, cpf e preco, que são os campos utilizados pelas consultas.
+A solução apresentada para o SQL padrão também é compativel com o Oracle, que é o SGBD utilizado pelo grupo.
 
 CREATE VIEW expositor_produto
 (nome_exposicao, cpf, preco)
