@@ -1,6 +1,25 @@
-1. Excluir painel ao excluir painelista
+1. O primeiro gatilho apresentado tem como funcionalidade verificar se, ao excluir um painelista, o painel ao qual ele estava associado deve ser removido ou não. Como pode haver mais de um painelista por painel, essa relação foi representada por meio de uma tabela de relacionamento APRESENTA_PN. O gatilho apresentado verifica os registros dessa tabela que estavam relacionados a essa painel, e em seguida, verifica se esses registros estão associados a apenas o painelista que foi removido. Ele remove os paineis que apresentarem essa condição. Depois, é apagada a relação entre painel e painelista da tabela de relacionamento.
+
+Evento:
+Remover na relação PAINELISTA.
+
+Condição: 
+Sempre.
+
+Ação: 
+Remover registros da relação PAINEL, quando essa não possuir nenhum registro com outro painelista na relação APRESENTA_PN.
+Remover registros da relação APRESENTA_PN que estejam associados ao cpf correspondente ao painelista removido.
 
 Oracle:
+
+Para remover as relações da tabela PAINEL, foi usada uma clausula WHERE com IN em um SELECT aninhado.
+O primeiro SELECT aninhado retorna todos os painéis que aparecem no máximo uma vez na relação APRESENTA_PN,
+filtrando essa busca pelo campo id_painel, que é selecionado de um conjunto de valores obito pelo uso de IN em um SELECT aninhado.
+Esse último retorna todos os valores de id_painel que estão associados ao painelista removido.
+
+Depois da primeira remoção, é executado outro DELETE para remover todos os registros da relação DELETE que estão associados ao painelista.
+
+Um detalhe importante é que a referência no Oracle para a linha removida que disparou o TRIGGER é feita por :old.
 
 create or replace TRIGGER 
 REMOVER_PAINEL
@@ -25,6 +44,9 @@ BEGIN
 END;
 
 SQL:
+
+A estrutura do TRIGGER apresentado para o SQL padrão é a mesma da apresentada para o Oracle, com excessão à forma de referenciar a linha
+que foi removida, que aqui é feita por: REFERENCING old row as oldRow, e acessada por oldRow.campoDesejado.
 
 create TRIGGER 
 REMOVER_PAINEL
