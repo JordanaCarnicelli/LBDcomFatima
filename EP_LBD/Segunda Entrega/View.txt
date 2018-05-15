@@ -1,17 +1,27 @@
-2. Essa visão é responsável por armazenar informações do expositor e dos produtos, com o intuito de otimizar duas consultas que foram apresentadas na primeira entrega do trabalho e que utilizam informações dessas duas relações.
+1. Essa visão é responsável representar algumas informações do veículo de comunicação, e dos jornalistas associados a eles e as respectivas matérias associadas a esses jornalistas. A ideia de restrição de segurança de acessoa que implica nessa visão é que diferentes veículos de comunicação não tenham acesso ao conteúdo que está sendo produzido por outros veículos, uma vez que este é registrado antes da publicação das resportagens. Assim, garantimos que um veículo não utilize informações sobre o trabalho de outro para ganhar vantagem competitiva.
+
+Oracle e SQL:
+
+Como a ideia principal é o aceso ao conteudo produzido pelos veículos, é os campos escolhidos para essa visão representam o nome e a plataforma do veiculo, as informações que descrevem as matérias e o cpf para que se saiba qual o jornalista responsável por cada matéria.
+A solução apresentada para o SQL padrão também é compativel com o Oracle, que é o SGBD utilizado pelo grupo.
+
+CREATE VIEW MATERIA_VEICULO
+(nome_vc, meio_comunicacao, cpf, titulo, assunto, data)
+AS
+SELECT VEICULO_COMUNICACAO.nome_vc, VEICULO_COMUNICACAO.meio_comunicacao, TRABALHA_EM.cpf, MATERIA.titulo, MATERIA.assunto, MATERIA.data
+FROM VEICULO_COMUNICACAO
+INNER JOIN TRABALHA_EM 
+ON VEICULO_COMUNICACAO.codigo_vc = TRABALHA_EM.codigo_vc
+INNER JOIN MATERIA
+ON TRABALHA_EM.cpf = MATERIA.cpf
+
+2. A nessecidade de otimização de consulta apresentada implica em uma visão que é responsável por armazenar informações do expositor 
+e dos produtos, com o intuito de otimizar duas consultas que foram apresentadas na primeira entrega do trabalho e que utilizam 
+informações dessas duas relações.
 
 Consultas otimizadas:
 
--- 2 Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que
--- a somatoria dos produtos seja maior do que R$250,00.
-
--- Retornos esperados dos seguintes registros:
--- PRODUTO (4, 'Moletom Mulher Maravilha', 'vestuario', 'Vermelha com estampa, capuz', 500, 200.00, '44444444444')
--- PRODUTO (6, 'Replica Dr. Estranho', 'colecionavel', 'Replica de aço escala 1/6', 100, 500.00, '99999999999')
--- PRODUTO (7, 'Chaveiro Ada Lovelace', 'colecionavel', 'Branco com estampa feito de pano', 1000, 50.00, '99999999999')
--- EXPOSITOR ('99999999999', 'Renner', 'vestuario')
--- EXPOSITOR ('44444444444', 'Colecionaveis show de bola', 'colecionaveis')
--- EXPOSITOR ('11111111111', 'Loja oficial do evento', 'souvenir');
+a. Retorne os nomes das exposições em que os expositores apresentem pelo menos 1 produto cujo preço é maior do que R$100,00 e que a somatoria dos produtos seja maior do que R$250,00.
 
 select expositor.nome_exposicao
 from expositor
@@ -28,7 +38,7 @@ and cpf in
 	)
 ;
 
--- 3 Retorne os nomes das exposições com produtos entre 50 e 150 reais e que não tem produtos mais caros do que 200 reais
+b. Retorne os nomes das exposições com produtos entre 50 e 150 reais e que não tem produtos mais caros do que 200 reais
 
 select expositor.nome_exposicao
 from expositor
@@ -57,19 +67,14 @@ FROM EXPOSITOR
 INNER JOIN PRODUTO 
 ON EXPOSITOR.cpf = PRODUTO.cpf
 
-1. Essa visão é responsável representar algumas informações do veículo de comunicação, e dos jornalistas associados a eles e as respectivas matérias associadas a esses jornalistas. A ideia de restrição de segurança de acessoa que implica nessa visão é que diferentes veículos de comunicação não tenham acesso ao conteúdo que está sendo produzido por outros veículos, uma vez que este é registrado antes da publicação das resportagens. Assim, garantimos que um veículo não utilize informações sobre o trabalho de outro para ganhar vantagem competitiva.
+Sobre a relação de custo/beneficio da utilização dessa visão podemos dizer que o custo adicional parar gerar a visão não é
+muito alto, porque ela não envolve muitas tabelas. Por outro lado, o ganho com a utilização delas nas consultas e bastante
+significativo, porque se considerarmos o cenário real do problema, podemos afirmar que operações de consulta em produtos
+de uma loja é algo bastante comum. Ainda podemos acrescentar que a criação dessa visão permitiria uma melhoria em todas
+as consultas desse tipo, não apenas nas duas apresentadas.
 
-Oracle e SQL:
+Não seria possível permitir atualizações nessa visão, porque elas implicariam em campos nulos, principalmente na relação PRODUTO,
+e temos que entre esses campos, a maioria foi definida como NOT NULL. Mesmo sem essa restrição, essa visão permitira inserir 
+registro em PRODUTO apenas com o preço do produto, o que não seria um registro ideal, porque não haveria nenhuma informação
+capaz de identificar o produto.
 
-Como a ideia principal é o aceso ao conteudo produzido pelos veículos, é os campos escolhidos para essa visão representam o nome e a plataforma do veiculo, as informações que descrevem as matérias e o cpf para que se saiba qual o jornalista responsável por cada matéria.
-A solução apresentada para o SQL padrão também é compativel com o Oracle, que é o SGBD utilizado pelo grupo.
-
-CREATE VIEW MATERIA_VEICULO
-(nome_vc, meio_comunicacao, cpf, titulo, assunto, data)
-AS
-SELECT VEICULO_COMUNICACAO.nome_vc, VEICULO_COMUNICACAO.meio_comunicacao, TRABALHA_EM.cpf, MATERIA.titulo, MATERIA.assunto, MATERIA.data
-FROM VEICULO_COMUNICACAO
-INNER JOIN TRABALHA_EM 
-ON VEICULO_COMUNICACAO.codigo_vc = TRABALHA_EM.codigo_vc
-INNER JOIN MATERIA
-ON TRABALHA_EM.cpf = MATERIA.cpf
