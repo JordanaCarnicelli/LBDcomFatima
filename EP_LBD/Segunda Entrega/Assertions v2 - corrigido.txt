@@ -32,7 +32,13 @@ ALTER TABLE BARRACA
 
 /*
 Casos de teste:
-a. 
+a. [INSERIR OUTRO PARTICIPANTE EM UMA BARRACA COM 1 CPF JÁ CADASTRADO]
+		NSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (1, '44196969828', 'Modelo 1', 'Marca 1');
+   [ERRO DESCRITO ABAIXO]
+		INSERT INTO BARRACA (id_barraca, cpf, modelo, marca) VALUES (1, '44196969828', 'Modelo 1', 'Marca 1')
+		Relatório de erros -
+		ORA-00001: restrição exclusiva (CARLAVIEIRA.ID_BARRACA_ID) violada
+
 b.
 c.*/
 
@@ -82,7 +88,16 @@ create or replace TRIGGER CHECK_JORNALISTA_VEICULO
     END;
 /*
 Casos de teste:
-a.
+a. [INSERCAO DO 2 JORNALISTA] 
+		INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('1515151515', 3);
+   [INSERCAO DO 3 JORNALISTA - ERRO] 
+   		INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('1515151510', 3);
+   [ERRO]	
+	Erro a partir da linha : 1 no comando -
+	INSERT INTO TRABALHA_EM (cpf, codigo_vc) VALUES ('1515151510', 3)
+	Relatório de erros -
+	ORA-20001: Numero maximo de jornalistas por veiculo excedido!
+
 b.
 c.
 
