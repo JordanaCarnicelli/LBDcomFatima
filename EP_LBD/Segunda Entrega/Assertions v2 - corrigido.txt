@@ -1,0 +1,91 @@
+/*1. Como informado na descrição do projeto, apresentada na primeira entrega, 
+cada barraca disponibilizada pelo evento pode ter no máximo um participante associado.
+Na definição do modelo, para respresentar essa associação, foi adicionado o campo cpf na tabela BARRACA.
+A asserção sugerida tem como objetivo garantir que exista apenas uma barraca por cpf.  
+
+
+SQL:
+
+A solução em SQL padrão segue o formato apresentado em aula, "não existe x, tal que não P(x)".
+Seguindo esse principio, a consulta interna tem como objetivo retornar a quantidade de barracas por cpf,
+e que tenham essa quantidade avaliada em > 1, para evitar um SELECT adicional em todos os resultados, para filtrar essa condição.
+Por fim, é verificado se não existe nenhum resultado que se encaixe nessa condição.*/
+
+create assertion restricao_participante_barraca check
+(not exists (
+        SELECT COUNT(*) FROM BARRACA GROUP BY cpf
+        HAVING COUNT(*) > 1)
+)
+
+/*Oracle:
+
+Como informado em aula, e confirmado pelos teste, o Oracle não possui suporte para asserções.
+A maneira encontrada para realizar o mesmo controle foi utilizando uma CONSTRAINT UNIQUE sobre o campo cpf,
+que implica em que um valor só pode aparecer uma única vez na coluna especificada.
+A sintaxe apresentada é estruturada para ser executada após a criação da tabela BARRACA. 
+Uma observação importante é que essa tratativa já havia sido implementada na primeira entrega, 
+então ao tentar executar essa instrução sobre o banco já construido, será retornado um erro de CONTRAINT já existente.*/
+
+ALTER TABLE BARRACA
+    ADD CONSTRAINT participante_barraca
+        UNIQUE (cpf)
+
+/*
+Casos de teste:
+a. 
+b.
+c.*/
+
+/*2. Outra regra apresentada na descrição do projeto é que para cada veículo de comunicação cadastrado,
+é permitido ter no máximo dois jornalistas associados.
+Como um jornalista pode estar associado a diferentes veículos de comunicação,
+essa relação foi implementada por meio de uma tabela de relacionamento, TRABALHA_EM. 
+A asserção sugerida tem como objetivo garantir que não existam mais de dois registros nessa tabela por veículo de comunicação.
+
+SQL:
+
+Segue a mesma estrutura da primeira, porém filtra os resultados da tabela TRABALHA_EM como maiores que 2,
+que é o limite implicado pela regra de negócio.*/
+
+create assertion restricao_jornalista_veiculo check
+(not exists (
+        SELECT COUNT(*) FROM TRABALHA_EM GROUP BY codigo_vc
+         HAVING COUNT(*) > 2)
+)
+
+/*Oracle:
+
+Como já foi dito, foi preciso escolher outra abordagem para modelar a asserção para o Oracle.
+Para esse caso, foi escolhida a utilização de um TRIGGER.
+Ele é realizado no momento BEFORE do INSERT na tabela TRABALHA_EM, porque após verificar a regra, se ela for quebrada,
+é disparado um erro que irá cancelar o processo de inserção na tabela.
+Aninhado em DECLARE temos a declaração de uma variavel que vai armazenar o resultado de uma consulta, 
+que retorna a quantidade de jornalistas associados aquele veículo de comunicação.
+A conidção para disparar o erro é >= 2 porque ela ocorre antes da inserção, então ela não contabiliza o registro que está sendo inserido.
+A condição maior está colocada porque essa verificação é feita apenas no INSERT, de forma que no UPDATE é possível cadastrar exceções,
+de forma que é possível ter valores maiores do que dois no banco. */
+
+create or replace TRIGGER CHECK_JORNALISTA_VEICULO  
+    BEFORE INSERT ON TRABALHA_EM  
+    FOR EACH ROW
+    DECLARE
+        qtdJornalistas INT;
+    BEGIN
+        SELECT COUNT(*) INTO qtdJornalistas
+        FROM TRABALHA_EM o
+        WHERE o.codigo_vc = :new.codigo_vc;
+
+        IF (qtdJornalistas >= 2)
+        THEN
+            RAISE_APPLICATION_ERROR( -20001, 'Numero maximo de jornalistas por veiculo excedido!' );
+        END IF;
+    END;
+/*
+Casos de teste:
+a.
+b.
+c.
+
+
+
+*/
