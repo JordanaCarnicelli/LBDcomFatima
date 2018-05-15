@@ -1,4 +1,8 @@
-1. Essa visão é responsável representar algumas informações do veículo de comunicação, e dos jornalistas associados a eles e as respectivas matérias associadas a esses jornalistas. A ideia de restrição de segurança de acessoa que implica nessa visão é que diferentes veículos de comunicação não tenham acesso ao conteúdo que está sendo produzido por outros veículos, uma vez que este é registrado antes da publicação das resportagens. Assim, garantimos que um veículo não utilize informações sobre o trabalho de outro para ganhar vantagem competitiva.
+1. Essa visão é responsável representar algumas informações do veículo de comunicação, 
+e dos jornalistas associados a eles e as respectivas matérias associadas a esses jornalistas. 
+A ideia de restrição de segurança de acesso que implica nessa visão é que diferentes veículos de comunicação não tenham acesso 
+ao conteúdo que está sendo produzido por outros veículos, uma vez que este é registrado antes da publicação das resportagens. 
+Assim, garantimos que um veículo não utilize informações sobre o trabalho de outro para ganhar vantagem competitiva.
 
 Oracle e SQL:
 
@@ -14,6 +18,17 @@ INNER JOIN TRABALHA_EM
 ON VEICULO_COMUNICACAO.codigo_vc = TRABALHA_EM.codigo_vc
 INNER JOIN MATERIA
 ON TRABALHA_EM.cpf = MATERIA.cpf
+
+O custo da criação dessa visão implica na combinação de informações de 3 realções, o que pode ser consideravelmente grande,
+visto que no cenário real da aplicação, esse tipo de consulta não é tão comum, uma vez que cada veículo de comunicação só pode
+ter no máximo dois jornalistas e eles não vão produzir um número muito grande de matérias durante o período do evento. Porém, como 
+o bojetivo principal dessa visão é garantir restrição de segurança, devemos avaliar seus beneficios em relação ao fato de que ela
+garante segurança para os veículos de comunicação pareceiros do evento, evitando vazamento de informações.
+
+Não seria possível permitir atualizações nessa visão, porque elas implicariam em campos nulos, 
+que em sua maioria estão definidos como NOT NULL. Caso tivessemos a completude dos campos envolvidos na view ou as chaves primárias
+das relações VEICULO_COMUNICACAO e MATERIA fossem do tipo auto-increment (que pode variar dependendo do SGBD), seria possível realizar
+INSERT nessa visão sem quebrar nenhuma restrição de definição do modelo.
 
 2. A nessecidade de otimização de consulta apresentada implica em uma visão que é responsável por armazenar informações do expositor 
 e dos produtos, com o intuito de otimizar duas consultas que foram apresentadas na primeira entrega do trabalho e que utilizam 
