@@ -110,38 +110,70 @@ REMOVER_VEICULO_JORNALISTA
 AFTER DELETE
 ON VEICULO_COMUNICACAO
 FOR EACH ROW
+
+DECLARE 
+    lista NUMBER;
 BEGIN
     INSERT INTO PAGANTE (cpf, valor_insc)
+
     SELECT cpf, 350.00
     FROM TRABALHA_EM
-    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    INTO cod_veiculo
+    WHERE TRABALHA_EM.codigo_vc = cod_veiculo;
 
-    DELETE FROM ISENTO
-    WHERE ISENTO.cpf IN (
-        SELECT cpf FROM TRABALHA_EM
+    SELECT cpf FROM TRABALHA_EM INTO lista
         WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
-    )
-
-    DELETE FROM JORNALISTA
-    WHERE JORNALISTA.cpf IN (
-        SELECT cpf FROM TRABALHA_EM
-        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
-    )
-
-    DELETE FROM MATERIA
-    WHERE MATERIA.cpf IN (
-        SELECT cpf FROM TRABALHA_EM
-        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
-    )
     
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN lista;
+
     DELETE FROM TRABALHA_EM
-    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc;
+    
+    DELETE FROM JORNALISTA
+    WHERE JORNALISTA.cpf IN lista;
+    
+    DELETE FROM ISENTO
+    WHERE ISENTO.cpf IN lista;   
 END;
 
 SQL:
 
 A estrutura do TRIGGER apresentado para o SQL padrão é a mesma da apresentada para o Oracle, com excessão à forma de referenciar a linha
 que foi removida, que aqui é feita por: REFERENCING old row as oldRow, e acessada por oldRow.campoDesejado. Também foi utilizado BEGIN ATOMIC visto que são feitas múltiplas operações.
+
+create or replace TRIGGER 
+REMOVER_VEICULO_JORNALISTA
+AFTER DELETE
+ON VEICULO_COMUNICACAO
+REFERENCING old row as oldRow
+FOR EACH ROW
+
+DECLARE 
+    lista NUMBER;
+BEGIN ATOMIC
+    INSERT INTO PAGANTE (cpf, valor_insc)
+
+    SELECT cpf, 350.00
+    FROM TRABALHA_EM
+    INTO cod_veiculo
+    WHERE TRABALHA_EM.codigo_vc = cod_veiculo;
+
+    SELECT cpf FROM TRABALHA_EM INTO lista
+        WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc
+    
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN lista;
+
+    DELETE FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = oldRow.codigo_vc;
+    
+    DELETE FROM JORNALISTA
+    WHERE JORNALISTA.cpf IN lista;
+    
+    DELETE FROM ISENTO
+    WHERE ISENTO.cpf IN lista;   
+END;
 
 create TRIGGER 
 REMOVER_VEICULO_JORNALISTA

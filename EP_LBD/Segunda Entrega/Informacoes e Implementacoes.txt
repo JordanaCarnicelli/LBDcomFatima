@@ -1,0 +1,110 @@
+Integrantes do grupo:
+
+Amanda da Silva Biosca                     N�USP:9761677
+Carla Piazzon Ramos Vieira                 N�USP:9779120
+Jordana Cristina Borges Arruda Carnicelli  N�USP:9894407
+Pedro Henrique Beani da Silva              N�USP:9875416
+
+Assercao 1:
+
+ALTER TABLE BARRACA
+    ADD CONSTRAINT participante_barraca
+        UNIQUE (cpf);
+
+Assercao 2:
+
+create or replace TRIGGER CHECK_JORNALISTA_VEICULO  
+    BEFORE INSERT ON TRABALHA_EM  
+    FOR EACH ROW
+    DECLARE
+        qtdJornalistas INT;
+    BEGIN
+        SELECT COUNT(*) INTO qtdJornalistas
+        FROM TRABALHA_EM o
+        WHERE o.codigo_vc = :new.codigo_vc;
+
+        IF (qtdJornalistas >= 2)
+        THEN
+            RAISE_APPLICATION_ERROR( -20001, 'Numero maximo de jornalistas por veiculo excedido!' );
+        END IF;
+    END;
+
+
+Gatilho 1:
+
+create or replace TRIGGER REMOVER_PAINEL
+    AFTER DELETE ON PAINELISTA
+    FOR EACH ROW
+    BEGIN
+        DELETE FROM PAINEL
+        WHERE id_painel IN (
+            SELECT id_painel
+            FROM APRESENTA_PN
+            WHERE id_painel IN (
+                SELECT id_painel 
+                FROM APRESENTA_PN
+                WHERE APRESENTA_PN.cpf = :old.cpf
+            )
+            GROUP BY id_painel
+            HAVING COUNT(*) <= 1
+        );
+    DELETE FROM APRESENTA_PN
+    WHERE APRESENTA_PN.cpf = :old.cpf;
+    END;
+
+Gatilho 2:
+
+create or replace TRIGGER 
+REMOVER_VEICULO_JORNALISTA
+AFTER DELETE
+ON VEICULO_COMUNICACAO
+FOR EACH ROW
+
+DECLARE 
+    lista NUMBER;
+BEGIN
+    INSERT INTO PAGANTE (cpf, valor_insc)
+
+    SELECT cpf, 350.00
+    FROM TRABALHA_EM
+    INTO cod_veiculo
+    WHERE TRABALHA_EM.codigo_vc = cod_veiculo;
+
+    SELECT cpf FROM TRABALHA_EM INTO lista
+        WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc
+    
+    DELETE FROM MATERIA
+    WHERE MATERIA.cpf IN lista;
+
+    DELETE FROM TRABALHA_EM
+    WHERE TRABALHA_EM.codigo_vc = :old.codigo_vc;
+    
+    DELETE FROM JORNALISTA
+    WHERE JORNALISTA.cpf IN lista;
+    
+    DELETE FROM ISENTO
+    WHERE ISENTO.cpf IN lista;   
+END;
+
+Visao seguranca:
+
+CREATE VIEW MATERIA_VEICULO
+(nome_vc, meio_comunicacao, cpf, titulo, assunto, data)
+AS
+SELECT VEICULO_COMUNICACAO.nome_vc, VEICULO_COMUNICACAO.meio_comunicacao, TRABALHA_EM.cpf, MATERIA.titulo, MATERIA.assunto, MATERIA.data
+FROM VEICULO_COMUNICACAO
+INNER JOIN TRABALHA_EM 
+ON VEICULO_COMUNICACAO.codigo_vc = TRABALHA_EM.codigo_vc
+INNER JOIN MATERIA
+ON TRABALHA_EM.cpf = MATERIA.cpf
+
+Visao otimizacao:
+
+CREATE VIEW expositor_produto
+(nome_exposicao, cpf, preco)
+AS
+SELECT EXPOSITOR.nome_exposicao, EXPOSITOR.cpf, PRODUTO.preco
+FROM EXPOSITOR
+INNER JOIN PRODUTO 
+ON EXPOSITOR.cpf = PRODUTO.cpf
+
